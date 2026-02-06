@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import Navbar from './Components/Navigation/Navbar.tsx';
 
 import './App.css'
+import Projects from "./Pages/Projects.tsx";
+import Settings from "./Pages/Settings.tsx";
 
 function App() {
 
@@ -12,8 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<div>Landing page....</div>} />
         <Route path="/home" element={<div><Navbar /><Outlet /></div>}>
-          <Route path="projects" element={<div>Projetcs</div>} />
-          <Route path="settings" element={<div>Settings</div>} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </HashRouter>
