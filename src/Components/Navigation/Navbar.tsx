@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
-        <div className="navbar bg-base-100 shadow-lg">
+        <div className="navbar bg-emerald-700 shadow-lg">
             <div>
-                <ul className="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box">
+                <ul className="menu menu-vertical lg:menu-horizontal bg-emerald-800 rounded-box">
                     <li><Link to="/home">{homeSvg}Home</Link></li>
                     <li><Link to="/home/projects">{projectsSvg}Projects</Link></li>
                     <li><Link to="/home/settings">{settingsSvg}Settings</Link></li>
