@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Http from '../common/httpUtils';
 import captain from "../assets/images/Captain_America_Salute.jpg";
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { SERVER, PROJECTS_ENDPOINT } from "../common/serverUrl";
 
 type Project = {
     id: number;
@@ -10,16 +11,16 @@ type Project = {
     info: string;
 };
 
- const NewProjectSchema = Yup.object().shape({
-   title: Yup.string()
-     .min(2, 'Too Short!')
-     .max(50, 'Too Long!')
-     .required('Required'),
-   info: Yup.string()
-     .min(10, 'Too Short!')
-     .max(50, 'Too Long!')
-     .required('Required'),
- });
+const NewProjectSchema = Yup.object().shape({
+    title: Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('Required'),
+    info: Yup.string()
+        .min(10, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('Required'),
+});
 
 const Projects = () => {
     const [projectData, setProjectData] = useState<Project[]>([]);
@@ -29,24 +30,24 @@ const Projects = () => {
     }, [])
 
     const getProjects = async () => {
-        const URL = 'http://localhost:3000/projects';
+        const URL = SERVER + PROJECTS_ENDPOINT;
         const http = new Http;
-        let projectsData:{data: any; errorMessage: any } = await http.get(URL);
+        let projectsData: { data: any; errorMessage: any } = await http.get(URL);
         setProjectData(projectsData.data);
     }
 
-    const createNewProject = async (newProject:Project):Promise<boolean> => {
-        const URL = 'http://localhost:3000/projects';
+    const createNewProject = async (newProject: Project): Promise<boolean> => {
+        const URL = SERVER + PROJECTS_ENDPOINT;
         const http = new Http;
         newProject.id = projectData.length + 1;
         const result = await http.post(URL, newProject);
-        if (result?.data?.status === 201){
+        if (result?.data?.status === 201) {
             const modal = document.getElementById('newProjectModal');
             if (modal !== null) {
                 // eslint-disable-next-line
                 modal.close();
             }
-            setTimeout(getProjects,500);
+            setTimeout(getProjects, 500);
             return true;
         } else {
             return false;
@@ -78,7 +79,6 @@ const Projects = () => {
                 <div className="flex">
                     <div className="m-auto">
                         <button className="btn btn-ghost" onClick={openModal}>Create New Project</button>
-
                         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
                             <table className="table w-2xl">
                                 {/* head */}
@@ -93,7 +93,8 @@ const Projects = () => {
                                     {renderProjectRows()}
                                 </tbody>
                             </table>
-                        </div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -107,8 +108,8 @@ const Projects = () => {
                         }}
                         validationSchema={NewProjectSchema}
                         onSubmit={async (values) => {
-                            const result = await createNewProject({id: 0, title: values.title, info: values.info});
-                            if(result === true){
+                            const result = await createNewProject({ id: 0, title: values.title, info: values.info });
+                            if (result === true) {
                                 values.info = "";
                                 values.title = "";
                             } else {
@@ -116,45 +117,43 @@ const Projects = () => {
                             }
                         }}
                     >
-                    {({ errors, touched, values, handleChange, handleBlur }) => (
-                    <Form>
-                    <fieldset className="fieldset">
-                    <input 
-                        type="text"
-                        placeholder="name of your project"
-                        name="title" 
-                        className="input" 
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.title}
-                    />
-                    <p className="label">{errors.title && touched.title ? (<>{errors.title}</>) : null}</p>
-                    </fieldset>
-                    <fieldset className="fieldset">
-                    <textarea 
-                        className="textarea h-24" 
-                        placeholder="Info"
-                        name="info"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.info}
-                    />
-                    <p className="label">{errors.info && touched.info ? (<>{errors.info}</>) : null}</p>
-                    </fieldset>
-                    <br/>
-                        <img src={captain} style={{ width: "300px" }} />
-                    <br/>
-                    <div className="modal-action">
-                        <button type="submit" className="btn">Let's Go!</button>
-                    </div>
-                    </Form>
-                    )}
+                        {({ errors, touched, values, handleChange, handleBlur }) => (
+                            <Form>
+                                <fieldset className="fieldset">
+                                    <input
+                                        type="text"
+                                        placeholder="name of your project"
+                                        name="title"
+                                        className="input"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.title}
+                                    />
+                                    <p className="label">{errors.title && touched.title ? (<>{errors.title}</>) : null}</p>
+                                </fieldset>
+                                <fieldset className="fieldset">
+                                    <textarea
+                                        className="textarea h-24"
+                                        placeholder="Info"
+                                        name="info"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.info}
+                                    />
+                                    <p className="label">{errors.info && touched.info ? (<>{errors.info}</>) : null}</p>
+                                </fieldset>
+                                <br />
+                                <img src={captain} style={{ width: "300px" }} />
+                                <br />
+                                <div className="modal-action">
+                                    <button type="submit" className="btn">Let's Go!</button>
+                                </div>
+                            </Form>
+                        )}
                     </Formik>
                 </div>
             </dialog>
-
         </>
-
     )
 }
 
