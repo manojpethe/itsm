@@ -8,9 +8,12 @@ import Projects from "./Pages/Projects.tsx";
 import Settings from "./Pages/Settings.tsx";
 import Login from "./Pages/Login.tsx";
 
+import { Context } from "./state/Context.ts";
+
 function App() {
 
   return (
+    <Context.Provider value={{username:"",id:0}}>
     <HashRouter>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -20,6 +23,7 @@ function App() {
         </Route>
       </Routes>
     </HashRouter>
+    </Context.Provider>
   )
 }
 
