@@ -23,8 +23,6 @@ type Project = {
 
 const Projects = () => {
     const [projectData, setProjectData] = useState<Project[]>([]);
-    const [newProjectName, setNewProjectName] = useState("");
-    const [newProjectInfo, setNewProjectInfo] = useState("");
 
     useEffect(() => {
         getProjects();
@@ -37,18 +35,22 @@ const Projects = () => {
         setProjectData(projectsData.data);
     }
 
-    const createNewProject = async (newProject:Project) => {
+    const createNewProject = async (newProject:Project):Promise<boolean> => {
         const URL = 'http://localhost:3000/projects';
         const http = new Http;
         newProject.id = projectData.length + 1;
         const result = await http.post(URL, newProject);
-        console.log("create proejct response--->",result.data.status);
-        const modal = document.getElementById('newProjectModal');
-        if (modal !== null) {
-            // eslint-disable-next-line
-            modal.close();
+        if (result?.data?.status === 201){
+            const modal = document.getElementById('newProjectModal');
+            if (modal !== null) {
+                // eslint-disable-next-line
+                modal.close();
+            }
+            setTimeout(getProjects,500);
+            return true;
+        } else {
+            return false;
         }
-        setTimeout(getProjects,500);
     }
 
     const openModal = () => {
@@ -104,50 +106,50 @@ const Projects = () => {
                             info: '',
                         }}
                         validationSchema={NewProjectSchema}
-                        onSubmit={values => {
-                            console.log(values);
-                            createNewProject({title: values.title, info: values.info});
+                        onSubmit={async (values) => {
+                            const result = await createNewProject({id: 0, title: values.title, info: values.info});
+                            if(result === true){
+                                values.info = "";
+                                values.title = "";
+                            } else {
+                                console.error("Service Unavailable");
+                            }
                         }}
                     >
                     {({ errors, touched, values, handleChange, handleBlur }) => (
                     <Form>
-                    <Field 
+                    <fieldset className="fieldset">
+                    <input 
+                        type="text"
+                        placeholder="name of your project"
                         name="title" 
                         className="input" 
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.title}
                     />
-                    {errors.title && touched.title ? (
-                        <div>{errors.title}</div>
-                    ) : null}
-                    <Field 
+                    <p className="label">{errors.title && touched.title ? (<>{errors.title}</>) : null}</p>
+                    </fieldset>
+                    <fieldset className="fieldset">
+                    <textarea 
+                        className="textarea h-24" 
+                        placeholder="Info"
                         name="info"
-                        className="input"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.info}
                     />
-                    {errors.info && touched.info ? (
-                        <div>{errors.info}</div>
-                    ) : null}
+                    <p className="label">{errors.info && touched.info ? (<>{errors.info}</>) : null}</p>
+                    </fieldset>
                     <br/>
-                    <button type="submit" className="btn">Let's Go!</button>
+                        <img src={captain} style={{ width: "300px" }} />
+                    <br/>
+                    <div className="modal-action">
+                        <button type="submit" className="btn">Let's Go!</button>
+                    </div>
                     </Form>
                     )}
-
-                    {/* <input type="text" placeholder="name of your project" className="input" onChange={e => setNewProjectName(e.target.value)} value={newProjectName} />
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Information</legend>
-                        <textarea className="textarea h-24" placeholder="Info" onChange={e => setNewProjectInfo(e.target.value)} value={newProjectInfo} />
-                        <img src={captain} style={{ width: "50%" }} />
-                    </fieldset> */}
                     </Formik>
-                    {/* <div className="modal-action">
-                        <form method="dialog">
-                            <button className="btn" onClick={createNewProject}>Let's Go!</button>
-                        </form>
-                    </div> */}
                 </div>
             </dialog>
 
