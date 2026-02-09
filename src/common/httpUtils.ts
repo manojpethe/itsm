@@ -27,13 +27,11 @@ class Http {
         let errorMessage = "";
 
         try {
-            const response = await fetch(URL, { method: "POST", body: JSON.stringify(data)});
-
+            responseData = await fetch(URL, { method: "POST", body: JSON.stringify(data)});
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        return {data , errorMessage};
-
+        return {data: responseData , errorMessage};
     }
 
     patch() {
