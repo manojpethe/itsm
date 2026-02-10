@@ -9,9 +9,9 @@ interface ProtectProps {
 const Protect = ({ children }: ProtectProps) => {
     const authContext = useContext(AuthContext);
     const location = useLocation();
-    console.error( "User is not Authenticated, redirecting to Login screen..." );
 
     if(authContext.username === ""){
+        console.error( "User is not Authenticated, redirecting to Login screen..." );
         return <Navigate to="/" state={{ from: location}} replace />
     }
 
