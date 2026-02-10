@@ -4,12 +4,7 @@ import captain from "../assets/images/Captain_America_Salute.jpg";
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { SERVER, PROJECTS_ENDPOINT } from "../common/serverUrl";
-
-type Project = {
-    id: number;
-    title: string;
-    info: string;
-};
+import type { Project } from "../common/typesStore";
 
 const NewProjectSchema = Yup.object().shape({
     title: Yup.string()

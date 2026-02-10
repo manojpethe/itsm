@@ -4,7 +4,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { SERVER, USERS_ENDPOINT } from '../common/serverUrl';
-import { Context } from '../state/Context';
+import { AuthContext } from '../state/AuthContext';
 import { useContext } from 'react';
 
 type Credential = {
@@ -26,7 +26,7 @@ type Credential = {
 const Login = () => {
     const navigate = useNavigate();
     const [message, setMessage] = useState("");
-    const context = useContext(Context);
+    const authContext = useContext(AuthContext);
 
 
     const loginUrl = SERVER + USERS_ENDPOINT;
@@ -37,8 +37,8 @@ const Login = () => {
         console.log(loginUrl+param);
         const result = await http.get(loginUrl+param);
         if(result.data[0]?.username !== undefined){
-            context.username = result.data[0]?.username;
-            context.id = result.data[0]?.id;
+            authContext.username = result.data[0]?.username;
+            authContext.id = result.data[0]?.id;
             return true
         } else {
             return false;

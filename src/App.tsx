@@ -8,12 +8,14 @@ import Projects from "./Pages/Projects.tsx";
 import Settings from "./Pages/Settings.tsx";
 import Login from "./Pages/Login.tsx";
 
-import { Context } from "./state/Context.ts";
+import { AuthContext, initialUserState } from "./state/AuthContext.ts";
+import { StateContext, initialGlobalState } from "./state/StateContext.ts";
 
 function App() {
 
   return (
-    <Context.Provider value={{username:"",id:0}}>
+    <AuthContext.Provider value={initialUserState}>
+    <StateContext.Provider value={initialGlobalState}>
     <HashRouter>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -23,7 +25,8 @@ function App() {
         </Route>
       </Routes>
     </HashRouter>
-    </Context.Provider>
+    </StateContext.Provider>
+    </AuthContext.Provider>
   )
 }
 
