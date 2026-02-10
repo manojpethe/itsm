@@ -4,6 +4,12 @@ import { useContext } from 'react';
 import { logoutSvg, homeSvg, projectsSvg, settingsSvg } from '../../common/IconStore';
 
 const Navbar = () => {
+
+    const logoutUser = ()=>{
+        authContext.id = 0;
+        authContext.username = "";
+    }
+
     const authContext = useContext(AuthContext);
     return (
         <div className="navbar bg-emerald-700 shadow-lg">
@@ -20,7 +26,7 @@ const Navbar = () => {
                 </button> */}
                 {/* <div>{authContext.username}</div> */}
                 <ul className="menu menu-vertical lg:menu-horizontal bg-emerald-800 rounded-box">
-                <li><Link to="/"> {logoutSvg} Logout</Link></li>
+                <li><Link to="/" onClick={logoutUser} > {logoutSvg} Logout</Link></li>
                 </ul>
             </div>
         </div>
