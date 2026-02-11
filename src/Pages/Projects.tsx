@@ -72,14 +72,18 @@ const Projects = () => {
         <>
             <div className="m-10">
                 <div className="flex">
+
                     <div className="m-auto">
-                        <button className="btn btn-ghost" onClick={openModal}>Create New Project</button>
+                        <div className="h-10">
+                            <div className="float-start font-bold border-b-emerald-500 border-b-1">Projects</div>
+                            <div className="float-end"> <button className="btn btn-ghost btn-circle bg-blue-400" onClick={openModal}>New</button></div>
+                        </div>
                         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
                             <table className="table w-2xl">
                                 {/* head */}
                                 <thead>
                                     <tr className="bg-base-100">
-                                        <th></th>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Info</th>
                                     </tr>
@@ -141,7 +145,7 @@ const Projects = () => {
                                 <img src={captain} style={{ width: "300px" }} />
                                 <br />
                                 <div className="modal-action">
-                                    <button type="submit" className="btn">Let's Go!</button>
+                                    <button type="submit" className="btn  border-green-500">Let's Go!</button>
                                 </div>
                             </Form>
                         )}
