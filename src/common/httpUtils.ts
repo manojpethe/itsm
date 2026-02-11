@@ -34,7 +34,17 @@ class Http {
         return {data: responseData , errorMessage};
     }
 
-    patch() {
+    async patch(URL: string, data:any): Promise<{ data: any; errorMessage: any; }> {
+        let responseData = null;
+        let errorMessage = "";
+        console.log(URL);
+
+        try {
+            responseData = await fetch(URL, { method: "PATCH", body: JSON.stringify(data)});
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        return {data: responseData , errorMessage};
     }
 
     delete() {

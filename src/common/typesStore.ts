@@ -10,9 +10,10 @@ export interface Project {
 };
 
 export interface User {
-  id: number;
+  id: string;
   username: string;
+  name: string;
   email: string;
-  usertype: number;
+  superuser: boolean;
   active: boolean;
 }
