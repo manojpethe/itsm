@@ -34,7 +34,6 @@ const Login = () => {
     const login = async(credential: Credential)=>{
         const param = `?username=${credential.username}&password=${credential.password}`;
         const http = new Http;
-        console.log(loginUrl+param);
         const result = await http.get(loginUrl+param);
         if(result.data[0]?.username !== undefined){
             authContext.username = result.data[0]?.username;
@@ -57,8 +56,7 @@ const Login = () => {
                 onSubmit={async (values) => {
                     const result = await login({ username: values.username, password: values.password});
                     if(result === true){
-                        console.log('redirecting....');
-                        setMessage("");
+                        console.log('login scuucessful....');
                         navigate("/home/projects");
                     } else {
                         setMessage("Incorrect username/password.");
