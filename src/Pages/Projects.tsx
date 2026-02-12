@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import { SERVER, PROJECTS_ENDPOINT } from "../common/serverUrl";
 import type { Project } from "../common/typesStore";
 import { useProject } from '../state/ProjectContext';
+import { useNavigate } from "react-router-dom";
+
 
 const NewProjectSchema = Yup.object().shape({
     title: Yup.string()
@@ -21,6 +23,7 @@ const NewProjectSchema = Yup.object().shape({
 const Projects = () => {
     const { projectId, setProjectId} = useProject();
     const [projectData, setProjectData] = useState<Project[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getProjects();
@@ -68,7 +71,12 @@ const Projects = () => {
         const rows = projectData.map(row => (
             (<tr key={row.id}>
                 <th>{row.id}</th>
-                <td><div className='btn-link cursor-pointer' onClick={() => { selectProject(row.id.toString()) }}>{row.title}</div></td>
+                <td><div 
+                    className='btn-link cursor-pointer' 
+                    onClick={() => { 
+                        selectProject(row.id.toString()); 
+                        navigate("/home/projects/"+row.id); 
+                    }}>{row.title}</div></td>
                 <td>{row.info}</td>
             </tr>)
         ))
