@@ -5,6 +5,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { SERVER, PROJECTS_ENDPOINT } from "../common/serverUrl";
 import type { Project } from "../common/typesStore";
+import { useProject } from '../state/ProjectContext';
 
 const NewProjectSchema = Yup.object().shape({
     title: Yup.string()
@@ -18,6 +19,7 @@ const NewProjectSchema = Yup.object().shape({
 });
 
 const Projects = () => {
+    const { projectId, setProjectId} = useProject();
     const [projectData, setProjectData] = useState<Project[]>([]);
 
     useEffect(() => {
@@ -57,11 +59,16 @@ const Projects = () => {
         }
     }
 
+    const selectProject =(id:string)=>{
+        console.log(id);
+        setProjectId(id.toString());
+    }
+
     const renderProjectRows = () => {
         const rows = projectData.map(row => (
             (<tr key={row.id}>
                 <th>{row.id}</th>
-                <td>{row.title}</td>
+                <td><div className='btn-link cursor-pointer' onClick={() => { selectProject(row.id.toString()) }}>{row.title}</div></td>
                 <td>{row.info}</td>
             </tr>)
         ))
@@ -70,6 +77,7 @@ const Projects = () => {
 
     return (
         <>
+        <div>selected project id {projectId}</div>
             <div className="m-10">
                 <div className="flex">
 
