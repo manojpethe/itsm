@@ -17,3 +17,9 @@ export interface User {
   superuser: boolean;
   active: boolean;
 }
+
+export interface Queues {
+  id: string;
+  name: string;
+  projectid: string;
+};

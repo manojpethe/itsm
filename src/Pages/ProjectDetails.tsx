@@ -1,15 +1,25 @@
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
+import SupportQueueSetup from '../Components/ProjectAdmin/SupportQueueSetup'
 
 const ProjectDetails = () => {
-    const {id: id}  = useParams();
+    const {id}  = useParams<string>();
 
     useEffect(()=>{
-        console.info(id);
+        // console.info(id);
     })
 
   return (
-    <div>ProjectDetails {id}</div>
+    <div>
+        <header className="ml-8 mr-8 mb-8 mt-8">
+        <div className="border-b-emerald-500 border-b">Project Setup {id}</div>
+    </header>
+    <div className="grid sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4  gap-10 m-8">
+        <div className="bg-gray-800 border-solid rounded-md border-gray-600 cursor-pointer">Project Statistics</div>
+        <SupportQueueSetup id={id} />
+        <div className="bg-gray-800 border-solid rounded-md border-gray-600 cursor-pointer">Enabled Modules</div>
+    </div>
+    </div>
   )
 }
 

@@ -85,13 +85,12 @@ const Projects = () => {
 
     return (
         <>
-        <div>selected project id {projectId}</div>
             <div className="m-10">
                 <div className="flex">
 
                     <div className="m-auto">
                         <div className="h-10">
-                            <div className="float-start font-bold border-b-emerald-500 border-b-1">Projects</div>
+                            <div className="float-start font-bold border-b-emerald-500 border-b">Projects</div>
                             <div className="float-end"> <button className="btn btn-ghost btn-circle bg-blue-400" onClick={openModal}>New</button></div>
                         </div>
                         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">

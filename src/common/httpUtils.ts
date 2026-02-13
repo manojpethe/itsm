@@ -1,12 +1,12 @@
 class Http {
 
-    async get (URL: string): Promise<{ data: any; errorMessage: any; }>{
+    async get(URL: string): Promise<{ data: any; errorMessage: any; }> {
         let data = null;
         let errorMessage = "";
 
         try {
             const response = await fetch(URL);
-            
+
             // fetch() only rejects on network errors; manually check for HTTP errors (404, 500, etc.)
             if (!response.ok) {
                 errorMessage = "Something went wrong!";
@@ -19,32 +19,32 @@ class Http {
             errorMessage = "There was an error while fetching data..";
             data = [];
         }
-        return {data , errorMessage};
+        return { data, errorMessage };
     }
 
-    async post(URL: string, data:any): Promise<{ data: any; errorMessage: any; }> {
+    async post(URL: string, data: any): Promise<{ data: any; errorMessage: any; }> {
         let responseData = null;
         let errorMessage = "";
 
         try {
-            responseData = await fetch(URL, { method: "POST", body: JSON.stringify(data)});
+            responseData = await fetch(URL, { method: "POST", body: JSON.stringify(data) });
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        return {data: responseData , errorMessage};
+        return { data: responseData, errorMessage };
     }
 
-    async patch(URL: string, data:any): Promise<{ data: any; errorMessage: any; }> {
+    async patch(URL: string, data: any): Promise<{ data: any; errorMessage: any; }> {
         let responseData = null;
         let errorMessage = "";
         console.log(URL);
 
         try {
-            responseData = await fetch(URL, { method: "PATCH", body: JSON.stringify(data)});
+            responseData = await fetch(URL, { method: "PATCH", body: JSON.stringify(data) });
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        return {data: responseData , errorMessage};
+        return { data: responseData, errorMessage };
     }
 
     delete() {
