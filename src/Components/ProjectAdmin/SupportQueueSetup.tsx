@@ -3,12 +3,14 @@ import Http from "../../common/httpUtils";
 import { SERVER, QUEUES_ENDPOINT } from "../../common/serverUrl";
 import type { Queues } from "../../common/typesStore";
 import { randomInt } from "../../common/sharedFunctions";
+import { useToast } from "../../state/ToastContext";
 
 const SupportQueueSetup = (data:any) => {
     const [projectId, setProjectId] = useState(data?.id);
     const [queuesData, setQueuesData] = useState<Queues[]>([]);
     const [newQname, setNewQname] = useState("");
     const http = new Http;
+    const { showToast } = useToast();
 
 
     useEffect(() => {
@@ -23,7 +25,8 @@ const SupportQueueSetup = (data:any) => {
 
     const saveQueue = async (newQname:string) => {
         if(newQname !== null && newQname.trim().length < 8 ){
-            console.error("please type in the queue name... min length 8 chars");
+            showToast("Type the queue name... min length 8 chars", 'info', 3);
+            console.error();
             return;
         }
         const endPoint = SERVER + QUEUES_ENDPOINT;
@@ -47,7 +50,7 @@ const SupportQueueSetup = (data:any) => {
             <button onClick={()=>{saveQueue(newQname)}} className="btn btn-block text-xs btn-xs btn-accent w-1/4 h-7">OK</button>
         </div>
         <div>
-            {queuesData.map((item)=>(<div>{item.name}</div>))}
+            {queuesData.map((item)=>(<div className="cursor-pointer" key={item.id}>{item.name}</div>))}
         </div>
     </div>  
   )
