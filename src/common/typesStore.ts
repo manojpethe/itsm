@@ -23,3 +23,9 @@ export interface Queue {
   name: string;
   projectid: string;
 };
+
+export interface QueueUserMap {
+  id: string;
+  userid: string;
+  queueid: string;
+}
