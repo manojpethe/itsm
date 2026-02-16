@@ -18,7 +18,7 @@ export interface User {
   active: boolean;
 }
 
-export interface Queues {
+export interface Queue {
   id: string;
   name: string;
   projectid: string;
