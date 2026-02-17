@@ -33,7 +33,6 @@ const QueueMembers = (data: any) => {
     }
 
     const mapUser=async (username:string)=>{
-        console.log(queue.id, username);
         const userId = getUserId(username);
         if (userId === undefined){
             console.error("Select correct user");
@@ -52,18 +51,9 @@ const QueueMembers = (data: any) => {
         return user?.id;
     }
 
-    const renderMembers=()=>{
-        
-        // console.log("hello world")
-        // console.log(queue);
-        
-        return <div className="text-xs">Member Name</div>
-    }
-    
-
     return (
         <div className="border-solid border rounded-md border-gray-700 p-4 m-2">
-            <div>{queue.name}</div>
+            <div className="text-orange-300">{queue.name}</div>
             <div className="flex mb-1 justify-center align-middle">
                 <div className="text-xs w-1/4 justify-center mt-2">Add member</div>
                 {/* <input onChange={() => { }} className="text-xs w-1/2 m-1" type="text" placeholder="name of member" /> */}

@@ -59,12 +59,12 @@ const Settings = () => {
     if (selectedUser.id === "0"){
       selectedUser.id = (userData.length + 1).toString();
       URL = SERVER + USERS_ENDPOINT;
+      selectedUser.password = "password";
       result = await http.post(URL, selectedUser);
     } else {
       URL = SERVER + USERS_ENDPOINT + "/" + selectedUser.id.toString();
       result = await http.patch(URL, selectedUser);
     }
-    console.info(result?.data?.status);
     if (result?.data?.status === 201 || result?.data?.status === 200) {
       setTimeout(getUsers, 500);
       return true;

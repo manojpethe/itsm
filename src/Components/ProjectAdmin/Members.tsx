@@ -11,21 +11,17 @@ const Members = ({queue, users}:MemberProps) => {
   const [QuMap, setQuMap] = useState<QueueUserMap[]>([]);
 
   useEffect(() => {
-    console.log(queue,users);
+    console.log("useEffect");
     getMap();
   }, [])
 
   const getMap = async () => {
     const response = await getQueueUserMap();
-    console.log(response.data)
     setQuMap(response.data);
   }
 
   const renderMembers=()=>{
-    // console.log(queue?.id)
-
     const listOfMembers = QuMap.filter((item)=> item.queueid === queue.id );
-    console.log(listOfMembers);
     const namesOfMembers:string[] = [];
     for(let i=0;i<listOfMembers.length;i++ ){
       const result = users.filter((item)=> item.id === listOfMembers[i].userid);
@@ -34,7 +30,7 @@ const Members = ({queue, users}:MemberProps) => {
       }
     }
     if(namesOfMembers.length)
-      return namesOfMembers.map((item)=>(<div>{item}</div>))
+      return namesOfMembers.map((item)=>(<div className="text-xs border-solid  border-b-orange-300 border-b" key={item}>{item}</div>))
     else
       return "";
   }

@@ -34,7 +34,6 @@ const SupportQueueSetup = (data:any) => {
         const data:Queue = { name: newQname, projectid: projectId, id: "" };
         data.id = randomInt().toString();
         const result = await http.post(endPoint, data);
-        console.log(result?.data);
         if(result.data?.status === 201){
             setNewQname("");
             getQueues(projectId);
