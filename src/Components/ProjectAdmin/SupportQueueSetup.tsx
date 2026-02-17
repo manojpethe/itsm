@@ -15,10 +15,10 @@ const SupportQueueSetup = (data:any) => {
 
 
     useEffect(() => {
-        getQueues(projectId);
+        getQueues();
     }, [projectId])
 
-    const getQueues = async(id:string)=>{
+    const getQueues = async()=>{
         const endPoint = SERVER + QUEUES_ENDPOINT+ "?projectid=" + projectId;
         const queuesData = await http.get(endPoint);
         setQueuesData(queuesData.data);

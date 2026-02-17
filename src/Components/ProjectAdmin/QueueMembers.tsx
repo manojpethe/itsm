@@ -11,9 +11,9 @@ const QueueMembers = (data: any) => {
     const http = new Http;
 
     const [users, setUsers] = useState<User[]>([]);
-    const [selectedUserId, setSelectedUserId] = useState<string>("");
+    // const [selectedUserId, setSelectedUserId] = useState<string>("");
     const [selectedUsername, setSelectedUsername] = useState<string>("");
-    const [queueUserMap, setQeueUserMap] = useState<QueueUserMap[]>([]);
+    // const [queueUserMap, setQeueUserMap] = useState<QueueUserMap[]>([]);
     
     
     useEffect(()=>{

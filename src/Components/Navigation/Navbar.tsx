@@ -15,7 +15,7 @@ const Navbar = () => {
         <div className="navbar bg-emerald-700 shadow-lg">
             <div className="flex-1">
                 <ul className="menu menu-vertical lg:menu-horizontal bg-emerald-800 rounded-box">
-                    <li><Link to="/home">{homeSvg}Home</Link></li>
+                    <li><Link to="/home/main">{homeSvg}Home</Link></li>
                     <li><Link to="/home/projects">{projectsSvg}Projects</Link></li>
                     <li><Link to="/home/settings">{settingsSvg}Settings</Link></li>
                 </ul>

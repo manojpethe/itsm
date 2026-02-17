@@ -61,7 +61,7 @@ const Login = () => {
                         const result = await login({ username: values.username, password: values.password });
                         if (result === true) {
                             console.log('login scuucessful....');
-                            navigate("/home/projects");
+                            navigate("/home/main");
                         } else {
                             setMessage("Incorrect username/password.");
                         }

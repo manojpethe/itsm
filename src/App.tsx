@@ -13,6 +13,7 @@ import { AuthContext, initialUserState } from "./state/AuthContext.ts";
 import { ProjectProvider } from './state/ProjectContext.tsx';
 import { ToastProvider } from './state/ToastContext.tsx';
 import ProjectDetails from "./Pages/ProjectDetails.tsx";
+import Main from "./Pages/Main.tsx";
 import Testlab from "./Pages/Testlab.tsx";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/home" element={<Protect><Navbar /><Outlet /></Protect>}>
+                <Route path="main" element={<Protect><Main /></Protect>} />
                 <Route path="projects" element={<Protect><Projects /></Protect>} />
                 <Route path="projects/:id" element={<Protect><ProjectDetails /></Protect>} />
                 <Route path="settings" element={<Protect><Settings /></Protect>} />
