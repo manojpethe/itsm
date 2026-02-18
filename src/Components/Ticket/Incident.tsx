@@ -23,6 +23,18 @@ const Incident = () => {
             <div className="bg-base-100 flex">
                 <div className="w-1/2">
                     <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Date Time</legend>
+                        <input type="datetime-local" className="input" />
+                        <span className="label">Optional</span>
+                    </fieldset>
+                </div>
+                <div className="w-1/2">
+                    When did this happen? closest time you may recollect.
+                </div>
+            </div>
+            <div className="bg-base-100 flex">
+                <div className="w-1/2">
+                    <fieldset className="fieldset">
                         <legend className="fieldset-legend">Nature of incident</legend>
                         <select defaultValue="Pick a browser" className="select">
                             <option disabled={true}>choose nature of incident</option>
@@ -59,11 +71,11 @@ const Incident = () => {
                     </fieldset>
                 </div>
                 <div className="w-1/2">
-                    Describe incident with steps to reproduce the incident or attache screenshots also with details relevant as you may think
+                    Describe incident with steps to reproduce the incident or attach screenshots also with details relevant as you may think
                 </div>
             </div>
             <div className="flex justify-around">
-                <button className="btn w-[30%] m-5 btn-outline">Okay</button><button className="btn w-[30%] m-5 btn-outline">Cancel</button>
+                <button className="btn w-[30%] m-5 btn-outline">Okay, create  Ticket</button><button className="btn w-[30%] m-5 btn-outline">Clear form</button>
             </div>
         </div>
     )
