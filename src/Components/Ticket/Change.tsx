@@ -16,7 +16,7 @@ const Change = () => {
                     </fieldset>
 
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Chose the Application or component which has degraded service or unavailable or even inaccessible
                 </div>
             </div>
@@ -28,7 +28,7 @@ const Change = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Change Window Start (local time)
                 </div>
             </div>
@@ -40,7 +40,7 @@ const Change = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Change Window End (local time)
                 </div>
             </div>
@@ -58,7 +58,7 @@ const Change = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Chose nature of change, best suited
                 </div>
             </div>
@@ -70,7 +70,7 @@ const Change = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Describe the change in few words
                 </div>
             </div>
@@ -82,7 +82,7 @@ const Change = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Describe the change, mention steps to be taken during window
                 </div>
             </div>
@@ -94,7 +94,7 @@ const Change = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Explain the rollback plan if change fails to address the primary purpose. Mention the time required to rollack.
                 </div>
             </div>

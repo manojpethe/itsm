@@ -16,7 +16,7 @@ const Incident = () => {
                     </fieldset>
 
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Chose the Application or component which has degraded service or unavailable or even inaccessible
                 </div>
             </div>
@@ -28,7 +28,7 @@ const Incident = () => {
                         <span className="label">Optional</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     When did this happen? closest time you may recollect.
                 </div>
             </div>
@@ -46,7 +46,7 @@ const Incident = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Chose nature of the incident based on best of your knowledge
                 </div>
             </div>
@@ -58,7 +58,7 @@ const Incident = () => {
                         <span className="label">Mandatory</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Describe incident in few words
                 </div>
             </div>
@@ -70,7 +70,7 @@ const Incident = () => {
                         <span className="label">Optional</span>
                     </fieldset>
                 </div>
-                <div className="w-1/2">
+                <div className="w-1/2 pt-10">
                     Describe incident with steps to reproduce the incident or attach screenshots also with details relevant as you may think
                 </div>
             </div>
