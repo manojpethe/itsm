@@ -1,6 +1,7 @@
 const Change = () => {
     return (
-        <div className="w-full h-1/2">
+        <div className="w-full h-full">
+            <div className="max-h-150 overflow-y-auto">
             <div className="bg-base-100 flex">
                 <div className="w-1/2">
                     <fieldset className="fieldset">
@@ -96,6 +97,7 @@ const Change = () => {
                 <div className="w-1/2">
                     Explain the rollback plan if change fails to address the primary purpose. Mention the time required to rollack.
                 </div>
+            </div>
             </div>
             <div className="flex justify-around">
                 <button className="btn w-[30%] m-5 btn-outline hover:bg-green-700">Okay, create  Ticket</button>

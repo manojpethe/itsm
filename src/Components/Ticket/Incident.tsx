@@ -1,6 +1,7 @@
 const Incident = () => {
     return (
-        <div className="w-full">
+        <div className="w-full h-full">
+            <div className="max-h-150 overflow-y-auto">
             <div className="bg-base-100 flex">
                 <div className="w-1/2">
                     <fieldset className="fieldset">
@@ -72,6 +73,7 @@ const Incident = () => {
                 <div className="w-1/2">
                     Describe incident with steps to reproduce the incident or attach screenshots also with details relevant as you may think
                 </div>
+            </div>
             </div>
             <div className="flex justify-around">
                 <button className="btn w-[30%] m-5 btn-outline hover:bg-green-700">Okay, create  Ticket</button>
