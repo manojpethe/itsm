@@ -3,7 +3,6 @@ const Incident = () => {
         <div className="w-full">
             <div className="bg-base-100 flex">
                 <div className="w-1/2">
-
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend">Application / Component</legend>
                         <select defaultValue="Pick a browser" className="select">
@@ -75,7 +74,8 @@ const Incident = () => {
                 </div>
             </div>
             <div className="flex justify-around">
-                <button className="btn w-[30%] m-5 btn-outline">Okay, create  Ticket</button><button className="btn w-[30%] m-5 btn-outline">Clear form</button>
+                <button className="btn w-[30%] m-5 btn-outline hover:bg-green-700">Okay, create  Ticket</button>
+                <button className="btn w-[30%] m-5 btn-outline hover:bg-pink-700">Clear form</button>
             </div>
         </div>
     )

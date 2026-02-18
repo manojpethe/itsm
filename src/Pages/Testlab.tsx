@@ -2,67 +2,18 @@ import { useToast } from '../state/ToastContext';
 
 const Testlab = () => {
 
-    const { showToast } = useToast();
+  const { showToast } = useToast();
 
   return (
     <>
-    <div className="flex gap-4 p-4"
-
->
-      <button 
-        className="btn btn-success" 
-        onClick={() => showToast('Saved!', 'success', 3)}
-      >
-        Success (3s)
-      </button>
-
-      <button 
-        className="btn btn-error" 
-        onClick={() => showToast('Failed!', 'error', 5)}
-      >
-        Error (5s)
-      </button>
-    </div>
-    <div className="w-full">
-            <div className="bg-base-100 flex">
-                <div className="w-1/2">
-
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Application / Component</legend>
-                        <select defaultValue="Pick a browser" className="select">
-                            <option disabled={true}>choose Application</option>
-                            <option>Application A</option>
-                            <option>Application B</option>
-                            <option>Application C</option>
-                        </select>
-                        <span className="label">Mandatory</span>
-                    </fieldset>
-
-                </div>
-                <div style={{width:"50%"}}>
-                    Chose the Application or component which has degraded service or unavailable or even inaccessible
-                </div>
-            </div>
-            <div className="bg-base-100 flex">
-                <div style={{width:"50%"}}>
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Nature of incident</legend>
-                        <select defaultValue="Pick a browser" className="select">
-                            <option disabled={true}>choose nature of incident</option>
-                            <option>Inaccessible</option>
-                            <option>Intermittent</option>
-                            <option>Lost Access/Password</option>
-                            <option>Inquiry</option>
-                        </select>
-                        <span className="label">Mandatory</span>
-                    </fieldset>
-                </div>
-                <div style={{width:"50%"}}>
-                    Chose nature of the incident based on best of your knowledge
-                </div>
-            </div>
+      <div className="flex mt-1">
+        <div className="m-auto max-w-[40%]">
+          <div className='border border-amber-500 border-2 w-dvh h-150'>
+            
+          </div>
         </div>
-        </>
+      </div>
+    </>
   );
 };
 
