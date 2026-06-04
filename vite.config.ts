@@ -1,8 +1,7 @@
-import { defineConfig } from 'vite'
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from 'vitest/config'
+import tailwindcss from "@tailwindcss/vite"
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react({
@@ -13,7 +12,7 @@ export default defineConfig({
     tailwindcss()
   ],
   test: {
-    globals: true, // Enables Jest-like global APIs like `describe` and `test` without importing them
-    environment: 'jsdom', // Use 'jsdom' or 'happy-dom' if testing UI components
+    globals: true, 
+    environment: 'jsdom', 
   },
 })
