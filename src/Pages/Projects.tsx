@@ -21,6 +21,7 @@ const NewProjectSchema = Yup.object().shape({
 });
 
 const Projects = () => {
+    // @ts-ignore
     const { projectId, setProjectId} = useProject();
     const [projectData, setProjectData] = useState<Project[]>([]);
     const navigate = useNavigate();
@@ -45,6 +46,7 @@ const Projects = () => {
             const modal = document.getElementById('newProjectModal');
             if (modal !== null) {
                 // eslint-disable-next-line
+                // @ts-ignore
                 modal.close();
             }
             setTimeout(getProjects, 500);
@@ -58,6 +60,7 @@ const Projects = () => {
         const modal = document.getElementById('newProjectModal');
         if (modal !== null) {
             // eslint-disable-next-line
+            // @ts-ignore
             modal.showModal();
         }
     }

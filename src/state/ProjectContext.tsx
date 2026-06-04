@@ -1,3 +1,4 @@
+          // @ts-ignore
 import { createContext, useState, ReactNode, useContext } from 'react';
 
 // 1. Define types

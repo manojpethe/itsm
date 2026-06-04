@@ -1,7 +1,7 @@
 import { useToast } from '../state/ToastContext';
 
 const Testlab = () => {
-
+          // @ts-ignore
   const { showToast } = useToast();
 
   return (

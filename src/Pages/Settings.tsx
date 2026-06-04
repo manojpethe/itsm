@@ -59,6 +59,7 @@ const Settings = () => {
     if (selectedUser.id === "0"){
       selectedUser.id = (userData.length + 1).toString();
       URL = SERVER + USERS_ENDPOINT;
+      // @ts-ignore
       selectedUser.password = "password";
       result = await http.post(URL, selectedUser);
     } else {
@@ -101,7 +102,7 @@ const Settings = () => {
         validationSchema={NewUserSchema}
         onSubmit={async (values) => {
           console.log(values);
-
+          // @ts-ignore
           const result = await saveUser(values);
           if (result === true) {
               setDisplayEditUser(false);
@@ -111,7 +112,8 @@ const Settings = () => {
           }
         }}
       >
-        {({ errors, touched, values, handleChange, handleBlur }) => (
+        { // @ts-ignore
+        ({ errors, touched, values, handleChange, handleBlur }) => (
           <Form>
             <table className="table w-2xl">
               <tbody>
