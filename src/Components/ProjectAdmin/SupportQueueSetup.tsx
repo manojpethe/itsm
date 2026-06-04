@@ -7,7 +7,8 @@ import { useToast } from "../../state/ToastContext";
 import QueueMembers from "./QueueMembers";
 
 const SupportQueueSetup = (data:any) => {
-    const [projectId, setProjectId] = useState(data?.id);
+    const [projectId] = useState(data?.id);
+    // const [projectId, setProjectId] = useState(data?.id);
     const [queuesData, setQueuesData] = useState<Queue[]>([]);
     const [newQname, setNewQname] = useState("");
     const http = new Http;
@@ -36,7 +37,8 @@ const SupportQueueSetup = (data:any) => {
         const result = await http.post(endPoint, data);
         if(result.data?.status === 201){
             setNewQname("");
-            getQueues(projectId);
+            getQueues();
+            // getQueues(projectId);
         }
     }
     
