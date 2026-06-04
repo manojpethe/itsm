@@ -12,4 +12,8 @@ export default defineConfig({
     }),
     tailwindcss()
   ],
+  test: {
+    globals: true, // Enables Jest-like global APIs like `describe` and `test` without importing them
+    environment: 'jsdom', // Use 'jsdom' or 'happy-dom' if testing UI components
+  },
 })
