@@ -1,0 +1,56 @@
+pipeline {
+    agent {
+        label 'ubuntu-build'
+    }
+
+    environment {
+        // Enforces non-interactive mode for test runners like Jest
+        CI = 'true' 
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Retrieves code from your repository
+                echo 'Code checkout...'
+                sh 'git clone https://github.com/manojpethe/itsm.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                echo 'Installing project dependencies...'
+                // clean-install ensures a consistent build environment
+                sh 'cd itsm ; npm install' 
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                echo 'Executing unit tests...'
+                sh 'cd itsm ; npm run test'
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                echo 'Building React application for production...'
+                sh 'cd itsm ; npm run build'
+            }
+        }
+
+    }
+
+    post {
+        always {
+            // Cleans workspace directory to save disk space on the agent
+            cleanWs() 
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the console logs.'
+        }
+    }
+}
