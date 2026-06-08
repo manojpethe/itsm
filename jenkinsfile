@@ -34,6 +34,7 @@ pipeline {
 
         stage('Build Application') {
             steps {
+                echo "The tag name is: ${env.TAG_NAME} OR ${env.GIT_TAG_NAME}"
                 echo 'Building React application for production...'
                 sh 'cd itsm ; npm run build'
             }
