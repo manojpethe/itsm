@@ -14,6 +14,7 @@ pipeline {
                 // Retrieves code from your repository
                 echo 'Code checkout...'
                 sh 'git clone https://github.com/manojpethe/itsm.git'
+                echo "The git details: ${env.GIT_COMMITTER_NAME} , ${env.GIT_COMMITTER_EMAIL}, ${env.BUILD_TAG}"
             }
         }
 
@@ -34,7 +35,7 @@ pipeline {
 
         stage('Build Application') {
             steps {
-                echo "The tag name is: ${env.TAG_NAME} OR ${env.GIT_TAG_NAME}"
+                echo "The git details: ${env.GIT_COMMITTER_NAME} , ${env.GIT_COMMITTER_EMAIL}, ${env.BUILD_TAG}"
                 echo 'Building React application for production...'
                 sh 'cd itsm ; npm run build'
             }
