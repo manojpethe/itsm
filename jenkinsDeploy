@@ -1,0 +1,35 @@
+pipeline {
+    agent {
+        label 'ubuntu-build'
+    }
+    stages {
+        stage('Fetch and Find Latest Tag') {
+            steps {
+                script {
+                    // 1. Initial checkout to fetch the repository metadata
+                    sh 'rm -fr itsm/'
+                    sh 'git clone https://github.com/manojpethe/itsm.git'
+                    
+                    // 2. Fetch all remote tags to ensure the workspace is up-to-date
+                    sh 'cd itsm ; git fetch --tags' 
+                    
+                    // 3. Get the latest tag name sorted by creation date
+                    env.LATEST_TAG = sh(script: 'cd itsm ; git tag --sort=-creatordate | head -n 1', returnStdout: true).trim()
+                    echo "The latest tag found is: ${env.LATEST_TAG}"
+                }
+            }
+        }
+        stage('Checkout Latest Tag') {
+            steps {
+                script {
+                    // 4. Force checkout the exact tag using GitSCM
+                    checkout([
+                        $class: 'GitSCM', 
+                        branches: [[name: "refs/tags/${env.LATEST_TAG}"]], // Absolute reference path
+                        userRemoteConfigs: scm.userRemoteConfigs
+                    ])
+                }
+            }
+        }
+    }
+}
