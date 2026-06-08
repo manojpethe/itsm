@@ -14,6 +14,10 @@ pipeline {
                 // Retrieves code from your repository
                 echo 'Code checkout...'
                 sh 'git clone https://github.com/manojpethe/itsm.git'
+                env.GIT_COMMITTER_NAME = sh(script: 'git log -1 --format="%cn"', returnStdout: true).trim()
+                env.GIT_COMMITTER_EMAIL = sh(script: 'git log -1 --format="%ce"', returnStdout: true).trim()
+                env.LATEST_TAG = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
+                echo "Latest tag found: ${env.LATEST_TAG}"
                 echo "The git details: ${env.GIT_COMMITTER_NAME} , ${env.GIT_COMMITTER_EMAIL}, ${env.BUILD_TAG}"
             }
         }
