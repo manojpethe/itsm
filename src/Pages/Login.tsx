@@ -1,9 +1,9 @@
 import Http from '../common/httpUtils';
-import { Formik, Form } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom";
-import { SERVER, USERS_ENDPOINT } from '../common/serverUrl';
+import { SERVER, AUTH_USERS_ENDPOINT } from '../common/serverUrl';
 import { AuthContext } from '../state/AuthContext';
 import { useContext } from 'react';
 import loginImg  from '../assets/images/login.png';
@@ -16,7 +16,7 @@ type Credential = {
 const LoginSchema = Yup.object().shape({
     username: Yup.string()
         .min(4, 'Too Short!')
-        .max(10, 'Too Long!')
+        .max(100, 'Too Long!')
         .required('Required'),
     password: Yup.string()
         .min(7, 'Too Short!')
@@ -30,15 +30,18 @@ const Login = () => {
     const authContext = useContext(AuthContext);
 
 
-    const loginUrl = SERVER + USERS_ENDPOINT;
+    const loginUrl = SERVER + AUTH_USERS_ENDPOINT;
 
-    const login = async (credential: Credential) => {
-        const param = `?username=${credential.username}&password=${credential.password}`;
+    const login = async (credential: Credential):Promise<boolean> => {
+        // const param = `?username=${credential.username}&password=${credential.password}`;
         const http = new Http;
-        const result = await http.get(loginUrl + param);
-        if (result.data[0]?.username !== undefined) {
-            authContext.username = result.data[0]?.username;
-            authContext.id = result.data[0]?.id;
+        const result = await http.post(loginUrl,credential);
+        console.log(result.status, result.statusText);
+        const data = result.json();
+        if (result.status === 200) {
+            authContext.name = data?.name;
+            authContext.username = data?.email;
+            authContext.ID = data?.ID;
             return true
         } else {
             return false;
@@ -58,7 +61,7 @@ const Login = () => {
                     }}
                     validationSchema={LoginSchema}
                     onSubmit={async (values) => {
-                        const result = await login({ username: values.username, password: values.password });
+                        const result:boolean = await login({ username: values.username, password: values.password });
                         if (result === true) {
                             console.log('login scuucessful....');
                             navigate("/home/main");

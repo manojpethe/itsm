@@ -6,7 +6,7 @@ import type { User } from "../common/typesStore";
 import { useEffect, useState } from 'react';
 
 const NewUserSchema = Yup.object().shape({
-  id: Yup.number(),
+  ID: Yup.number(),
   username: Yup.string()
     .min(4, 'Too Short!')
     .max(12, 'Too Long!')
@@ -22,7 +22,7 @@ const NewUserSchema = Yup.object().shape({
 });
 
 const newUserModel: User = {
-  id: "0",
+  ID: "0",
   username: "",
   name: "",
   email: "",
@@ -47,8 +47,8 @@ const Settings = () => {
     setUserData(userData.data);
   }
 
-  const editUser = (id: string) => {
-    const userToEdit = userData.find(row => id === row.id);
+  const editUser = (ID: string) => {
+    const userToEdit = userData.find(row => ID === row.ID);
     setSelectedUser(userToEdit);
   }
 
@@ -56,14 +56,17 @@ const Settings = () => {
     const http = new Http;
     let URL = "";
     let result:any;
-    if (selectedUser.id === "0"){
-      selectedUser.id = (userData.length + 1).toString();
+    if (selectedUser.ID == 0){
+      // selectedUser.ID = (userData.length + 1).toString();
       URL = SERVER + USERS_ENDPOINT;
       // @ts-ignore
       selectedUser.password = "password";
+      selectedUser.ID = 0;
+      // @ts-ignore
+      console.log(selectedUser);
       result = await http.post(URL, selectedUser);
     } else {
-      URL = SERVER + USERS_ENDPOINT + "/" + selectedUser.id.toString();
+      URL = SERVER + USERS_ENDPOINT + "/" + selectedUser.ID.toString();
       result = await http.patch(URL, selectedUser);
     }
     if (result?.data?.status === 201 || result?.data?.status === 200) {
@@ -76,9 +79,9 @@ const Settings = () => {
 
   const renderUserRows = () => {
     const rows = userData.map(row => (
-      (<tr key={row.id}>
-        <th>{row.id}</th>
-        <td><div className='btn-link cursor-pointer' onClick={() => { editUser(row.id); setDisplayEditUser(true) }}>{row.username}</div></td>
+      (<tr key={row.ID}>
+        <th>{row.ID}</th>
+        <td><div className='btn-link cursor-pointer' onClick={() => { editUser(row.ID); setDisplayEditUser(true) }}>{row.username}</div></td>
         <td>{row.name}</td>
         <td>{row.email}</td>
         <td>{row.active ? "Yes" : "No"}</td>
@@ -92,14 +95,14 @@ const Settings = () => {
     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
       <Formik
         initialValues={{
-          id: selectedUser?.id,
+          ID: selectedUser?.ID,
           username: selectedUser?.username,
           name: selectedUser?.name,
           email: selectedUser?.email,
           superuser: selectedUser?.superuser,
           active: selectedUser?.active,
         }}
-        validationSchema={NewUserSchema}
+        valIDationSchema={NewUserSchema}
         onSubmit={async (values) => {
           console.log(values);
           // @ts-ignore

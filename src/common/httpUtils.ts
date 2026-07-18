@@ -22,21 +22,19 @@ class Http {
         return { data, errorMessage };
     }
 
-    async post(URL: string, data: any): Promise<{ data: any; errorMessage: any; }> {
+    // async post(URL: string, data: any): Promise<{ data: any; errorMessage: any; }> {
+    async post(URL: string, data: any): Promise<any> {
         let responseData = null;
-        let errorMessage = "";
-
         try {
             responseData = await fetch(URL, { method: "POST", body: JSON.stringify(data) });
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        return { data: responseData, errorMessage };
+        return responseData;
     }
 
-    async patch(URL: string, data: any): Promise<{ data: any; errorMessage: any; }> {
+    async patch(URL: string, data: any): Promise<any> {
         let responseData = null;
-        let errorMessage = "";
         console.log(URL);
 
         try {
@@ -44,7 +42,7 @@ class Http {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        return { data: responseData, errorMessage };
+        return responseData;
     }
 
     delete() {

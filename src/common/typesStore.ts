@@ -1,6 +1,7 @@
 export interface AuthUser {
-  id: number;
+  ID: number;
   username: string;
+  name: string;
 }
 
 export interface Project {
@@ -10,7 +11,7 @@ export interface Project {
 };
 
 export interface User {
-  id: string;
+  ID: string | number;
   username: string;
   name: string;
   email: string;
