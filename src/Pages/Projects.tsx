@@ -40,9 +40,9 @@ const Projects = () => {
     const createNewProject = async (newProject: Project): Promise<boolean> => {
         const URL = SERVER + PROJECTS_ENDPOINT;
         const http = new Http;
-        newProject.id = projectData.length + 1;
+        // newProject.id = projectData.length + 1;
         const result = await http.post(URL, newProject);
-        if (result?.data?.status === 201) {
+        if (result?.status === 201 || result?.status === 200) {
             const modal = document.getElementById('newProjectModal');
             if (modal !== null) {
                 // eslint-disable-next-line
@@ -65,20 +65,20 @@ const Projects = () => {
         }
     }
 
-    const selectProject =(id:string)=>{
-        console.log(id);
-        setProjectId(id.toString());
+    const selectProject =(ID:string)=>{
+        console.log(ID);
+        setProjectId(ID.toString());
     }
 
     const renderProjectRows = () => {
         const rows = projectData.map(row => (
-            (<tr key={row.id}>
-                <th>{row.id}</th>
+            (<tr key={row.ID}>
+                <th>{row.ID}</th>
                 <td><div 
                     className='btn-link cursor-pointer' 
                     onClick={() => { 
-                        selectProject(row.id.toString()); 
-                        navigate("/home/projects/"+row.id); 
+                        selectProject(row.ID.toString()); 
+                        navigate("/home/projects/"+row.ID); 
                     }}>{row.title}</div></td>
                 <td>{row.info}</td>
             </tr>)
@@ -125,7 +125,7 @@ const Projects = () => {
                         }}
                         validationSchema={NewProjectSchema}
                         onSubmit={async (values) => {
-                            const result = await createNewProject({ id: 0, title: values.title, info: values.info });
+                            const result = await createNewProject({ ID: 0, title: values.title, info: values.info });
                             if (result === true) {
                                 values.info = "";
                                 values.title = "";

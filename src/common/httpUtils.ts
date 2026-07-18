@@ -35,7 +35,6 @@ class Http {
 
     async patch(URL: string, data: any): Promise<any> {
         let responseData = null;
-        console.log(URL);
 
         try {
             responseData = await fetch(URL, { method: "PATCH", body: JSON.stringify(data) });

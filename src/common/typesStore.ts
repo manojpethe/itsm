@@ -5,7 +5,7 @@ export interface AuthUser {
 }
 
 export interface Project {
-    id: number;
+    ID: string | number;
     title: string;
     info: string;
 };

@@ -63,13 +63,12 @@ const Settings = () => {
       selectedUser.password = "password";
       selectedUser.ID = 0;
       // @ts-ignore
-      console.log(selectedUser);
       result = await http.post(URL, selectedUser);
     } else {
       URL = SERVER + USERS_ENDPOINT + "/" + selectedUser.ID.toString();
       result = await http.patch(URL, selectedUser);
     }
-    if (result?.data?.status === 201 || result?.data?.status === 200) {
+    if (result?.status === 201 || result?.status === 200) {
       setTimeout(getUsers, 500);
       return true;
     } else {
@@ -84,8 +83,20 @@ const Settings = () => {
         <td><div className='btn-link cursor-pointer' onClick={() => { editUser(row.ID); setDisplayEditUser(true) }}>{row.username}</div></td>
         <td>{row.name}</td>
         <td>{row.email}</td>
-        <td>{row.active ? "Yes" : "No"}</td>
-        <td>{row.superuser ? "Yes" : "No"}</td>
+        <td>
+          { row.active ?
+          <div className="flex items-center">
+              <input checked disabled id="checked-checkbox" type="checkbox" value="" className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" />
+          </div>
+          : ""}
+        </td>
+        <td>
+          { row.superuser ?
+          <div className="flex items-center">
+              <input checked disabled id="checked-checkbox" type="checkbox" value="" className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" />
+          </div>
+          : ""}
+        </td>
       </tr>)
     ))
     return rows;
@@ -104,9 +115,10 @@ const Settings = () => {
         }}
         valIDationSchema={NewUserSchema}
         onSubmit={async (values) => {
-          console.log(values);
+          // console.log(values);
           // @ts-ignore
           const result = await saveUser(values);
+          // getUsers();
           if (result === true) {
               setDisplayEditUser(false);
               setSelectedUser(newUserModel);
@@ -155,8 +167,23 @@ const Settings = () => {
                       value={values.email}
                     />
                   </td>
-                  <td className='w-10'>Active</td>
-                  <td className='w-10'>Superuser</td>
+                  <td className='w-10'>Active
+                    <div className="flex items-center">
+                        <input 
+                            id="active"
+                            name="active"
+                            type="checkbox"
+                            checked={!!values.active} // Ensures it's strictly a boolean
+                            onChange={handleChange} 
+                            className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" 
+                        />
+                    </div>
+                  </td>
+                  <td className='w-10'>Superuser
+                    <div className="flex items-center">
+                        <input disabled onChange={handleChange} checked={values.superuser} id="checked-checkbox" type="checkbox" value="" className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" />
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
