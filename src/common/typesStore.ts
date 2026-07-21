@@ -20,13 +20,13 @@ export interface User {
 }
 
 export interface Queue {
-  id: string;
+  ID: string | number;
   name: string;
-  projectid: string;
+  projectid: number;
 };
 
 export interface QueueUserMap {
-  id: string;
-  userid: string;
-  queueid: string;
+  ID: number;
+  userid: number;
+  queueid: number;
 }

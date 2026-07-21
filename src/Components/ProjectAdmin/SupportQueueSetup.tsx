@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 import Http from "../../common/httpUtils";
 import { SERVER, QUEUES_ENDPOINT } from "../../common/serverUrl";
 import type { Queue } from "../../common/typesStore";
-import { randomInt } from "../../common/sharedFunctions";
+// import { randomInt } from "../../common/sharedFunctions";
 import { useToast } from "../../state/ToastContext";
 import QueueMembers from "./QueueMembers";
 
 const SupportQueueSetup = (data:any) => {
     const [projectId] = useState(data?.id);
-    // const [projectId, setProjectId] = useState(data?.id);
+    // const [projectId, setProjectId] = useState(data?.ID);
     const [queuesData, setQueuesData] = useState<Queue[]>([]);
     const [newQname, setNewQname] = useState("");
     const http = new Http;
@@ -32,8 +32,8 @@ const SupportQueueSetup = (data:any) => {
             return;
         }
         const endPoint = SERVER + QUEUES_ENDPOINT;
-        const data:Queue = { name: newQname, projectid: projectId, id: "" };
-        data.id = randomInt().toString();
+        const data:Queue = { name: newQname, projectid: parseInt(projectId), ID: 0 };
+        // data.ID = randomInt().toString();
         const result = await http.post(endPoint, data);
         if(result.data?.status === 201){
             setNewQname("");
@@ -52,8 +52,8 @@ const SupportQueueSetup = (data:any) => {
             <button onClick={()=>{saveQueue(newQname)}} className="btn btn-block text-xs btn-xs btn-accent w-1/4 h-7">OK</button>
         </div>
         <div>
-            {/* {queuesData.map((item)=>(<div className="cursor-pointer" key={item.id}>{item.name}</div>))} */}
-            {queuesData.map((item)=>(<QueueMembers key={item.id} queue={item}  />))}
+            {/* {queuesData.map((item)=>(<div className="cursor-pointer" key={item.ID}>{item.name}</div>))} */}
+            {queuesData.map((item)=>(<QueueMembers key={item.ID} queue={item}  />))}
         </div>
     </div>  
   )

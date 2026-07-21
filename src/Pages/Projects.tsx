@@ -78,7 +78,7 @@ const Projects = () => {
                     className='btn-link cursor-pointer' 
                     onClick={() => { 
                         selectProject(row.ID.toString()); 
-                        navigate("/home/projects/"+row.ID); 
+                        navigate("/home/projects/"+row.ID+"?title="+row.title); 
                     }}>{row.title}</div></td>
                 <td>{row.info}</td>
             </tr>)
