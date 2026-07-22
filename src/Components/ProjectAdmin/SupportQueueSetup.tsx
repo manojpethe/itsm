@@ -37,7 +37,7 @@ const SupportQueueSetup = (data:any) => {
         const result = await http.post(endPoint, data);
         if(result.data?.status === 201){
             setNewQname("");
-            getQueues();
+            setTimeout(()=>{getQueues()},1000);
             // getQueues(projectId);
         }
     }

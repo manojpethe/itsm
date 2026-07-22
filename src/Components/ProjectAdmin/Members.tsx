@@ -1,44 +1,37 @@
 import { useEffect, useState } from "react"
 import type { Queue, User, QueueUserMap } from "../../common/typesStore"
-import { getQueueUserMap } from "../../common/sharedFunctions";
+// import { getQueueUserMap } from "../../common/sharedFunctions";
+import { SERVER, QUEUES_ENDPOINT } from "../../common/serverUrl";
+import Http from "../../common/httpUtils"
 
-interface MemberProps {
-  queue: Queue;
-  users: User[];
+export interface QueueMember {
+  ID: number;
+  name: string;
 }
 
-const Members = ({queue, users}:MemberProps) => {
-  const [QuMap, setQuMap] = useState<QueueUserMap[]>([]);
+const Members = (queueid: any) => {
+  const [QueueMembers, setQueueMembers] = useState<QueueMember[]>([]);
 
   useEffect(() => {
-    console.log("useEffect");
+    console.log("useEffect", queueid);
     getMap();
   }, [])
 
   const getMap = async () => {
-    const response = await getQueueUserMap();
-    setQuMap(response.data);
+    const http = new Http;
+
+    const URL = SERVER + QUEUES_ENDPOINT + "/" + queueid.queueid;
+    const result = await http.get(URL);
+    setQueueMembers(result.data);
   }
 
-  const renderMembers=()=>{
-    const listOfMembers = QuMap.filter((item)=> item.queueid === queue.id );
-    const namesOfMembers:string[] = [];
-    for(let i=0;i<listOfMembers.length;i++ ){
-      const result = users.filter((item)=> item.id === listOfMembers[i].userid);
-      if(result.length){
-        namesOfMembers.push(result[0]?.name);
-      }
-    }
-    if(namesOfMembers.length)
-      return namesOfMembers.map((item)=>(<div className="text-xs border-solid  border-b-orange-300 border-b" key={item}>{item}</div>))
-    else
-      return "";
+  const renderMembers = () => {
+    return QueueMembers.map((item) => (<div className="text-xs border-solid  border-b-orange-300 border-b" key={item.ID}>{item.name}</div>))
   }
-
 
   return (
     <>
-    <div>{renderMembers()}</div>
+      <div>{renderMembers()}</div>
     </>
   )
 }

@@ -20,7 +20,7 @@ export interface User {
 }
 
 export interface Queue {
-  ID: string | number;
+  ID: number;
   name: string;
   projectid: number;
 };

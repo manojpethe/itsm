@@ -1,9 +1,9 @@
 import type { Queue, User, QueueUserMap } from "../../common/typesStore";
 // import { useToast } from "../../state/ToastContext";
 import Http from "../../common/httpUtils";
-import { SERVER, QUEUE_USER_MAP_ENDPOINT } from "../../common/serverUrl";
+import { USERS_ENDPOINT, SERVER, QUEUE_USER_MAP_ENDPOINT } from "../../common/serverUrl";
 import { useState, useEffect } from "react";
-import { getUsers, randomInt } from "../../common/sharedFunctions";
+// import { getUsers } from "../../common/sharedFunctions";
 import Members from "./Members";
 
 const QueueMembers = (data: any) => {
@@ -11,9 +11,7 @@ const QueueMembers = (data: any) => {
     const http = new Http;
 
     const [users, setUsers] = useState<User[]>([]);
-    // const [selectedUserId, setSelectedUserId] = useState<string>("");
     const [selectedUsername, setSelectedUsername] = useState<string>("");
-    // const [queueUserMap, setQeueUserMap] = useState<QueueUserMap[]>([]);
     
     
     useEffect(()=>{
@@ -21,34 +19,36 @@ const QueueMembers = (data: any) => {
     }, [])
 
     const initUsers =async ()=>{
-        const result = await getUsers();
+        const result = await http.get(SERVER + USERS_ENDPOINT)
         setUsers(result.data);
     }
 
     const renderUserList =()=>{
         return users.map((user)=>(
-        <option key={user.id} id={user.id}>
+        <option key={user.ID} id={user.ID}>
             {user.name}
         </option>))
     }
 
-    const mapUser=async (username:string)=>{
+    const addUserToQueue=async (username:string)=>{
         const userId = getUserId(username);
         if (userId === undefined){
             console.error("Select correct user");
             return;
         }
-        let qum:QueueUserMap = {id: randomInt().toString(),queueid:queue.id, userid: userId };
+        let qum:QueueUserMap = {ID: 0, queueid:data?.queue?.ID, userid: parseInt(userId) };
         const URL = SERVER + QUEUE_USER_MAP_ENDPOINT;
         const response = await http.post(URL, qum);
-        if(response.data.status === "201"){
+        if(response.status === "201"){
             console.log("All good!")
+        } else {
+            console.log(response.status);
         }
     }
 
     const getUserId = (username:string):string=>{
         const user:any  = users.find((user => user.name === username ));
-        return user?.id;
+        return user.ID;
     }
 
     return (
@@ -61,10 +61,10 @@ const QueueMembers = (data: any) => {
                 <datalist id="members">
                 {renderUserList()}
                 </datalist>
-                <button onClick={() => { mapUser(selectedUsername) }} className="btn btn-block btn-xs border-orange-300 w-1/4 h-7">+ ADD</button>
+                <button onClick={() => { addUserToQueue(selectedUsername) }} className="btn btn-block btn-xs border-orange-300 w-1/4 h-7">+ ADD</button>
             </div>
             <div>
-                <Members queue={queue} users={users} />
+                <Members queueid={data?.queue?.ID} />
             </div>
         </div>
     )
