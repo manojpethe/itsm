@@ -66,6 +66,10 @@ const QueueMembers = (data: any) => {
         setQueueMembers(result.data);
     }
 
+    const handleDeleteMember = (id:number)=> {
+        console.log("parent compoenent call api to delete",id);
+    }
+
     return (
         <div className="border-solid border rounded-md border-gray-700 p-4 m-2">
             <div className="text-orange-300">{queue.name}</div>
@@ -79,7 +83,7 @@ const QueueMembers = (data: any) => {
                 <button onClick={() => { addUserToQueue(selectedUsername) }} className="btn btn-block btn-xs border-orange-300 w-1/4 h-7">+ ADD</button>
             </div>
             <div>
-                <Members data={queueMembers} />
+                <Members data={queueMembers} deleteMember={handleDeleteMember} />
             </div>
         </div>
     )
