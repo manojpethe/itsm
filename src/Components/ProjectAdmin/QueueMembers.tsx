@@ -67,8 +67,23 @@ const QueueMembers = (data: any) => {
         setQueueMembers(result.data || dummyData);
     }
 
+    const deleteMemberFromQueue =  async(id:number) => {
+        const http = new Http;
+        const URL = SERVER + QUEUE_USER_MAP_ENDPOINT;
+        const request = { queueid: data?.queue?.ID, userid: id };
+        const result = await http.delete(URL,request);
+        console.log(result);
+        if(result.status === 200){
+            console.log("All Good!");
+        } else {
+            console.error(result.status);
+        }
+        getMembers();
+    }
+
     const handleDeleteMember = (id:number)=> {
         console.log("parent compoenent call api to delete",id);
+        deleteMemberFromQueue(id);
     }
 
     return (

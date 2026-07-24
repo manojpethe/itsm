@@ -35,7 +35,6 @@ class Http {
 
     async patch(URL: string, data: any): Promise<any> {
         let responseData = null;
-
         try {
             responseData = await fetch(URL, { method: "PATCH", body: JSON.stringify(data) });
         } catch (error) {
@@ -44,7 +43,14 @@ class Http {
         return responseData;
     }
 
-    delete() {
+    async delete(URL: string, data: any): Promise<any> {
+        let responseData = null;
+        try {
+            responseData = await fetch(URL, { method: "DELETE", body: JSON.stringify(data) });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        return responseData;
     }
 
 }
