@@ -63,7 +63,8 @@ const QueueMembers = (data: any) => {
         const http = new Http;
         const URL = SERVER + QUEUES_ENDPOINT + "/" + data?.queue?.ID;
         const result = await http.get(URL);
-        setQueueMembers(result.data);
+        const dummyData:qMember[] = []
+        setQueueMembers(result.data || dummyData);
     }
 
     const handleDeleteMember = (id:number)=> {
