@@ -1,10 +1,15 @@
 import type { Queue, User, QueueUserMap } from "../../common/typesStore";
 // import { useToast } from "../../state/ToastContext";
 import Http from "../../common/httpUtils";
-import { USERS_ENDPOINT, SERVER, QUEUE_USER_MAP_ENDPOINT } from "../../common/serverUrl";
+import { USERS_ENDPOINT, SERVER, QUEUE_USER_MAP_ENDPOINT ,QUEUES_ENDPOINT } from "../../common/serverUrl";
 import { useState, useEffect } from "react";
 // import { getUsers } from "../../common/sharedFunctions";
 import Members from "./Members";
+
+export interface qMember {
+  ID: number;
+  name: string;
+}
 
 const QueueMembers = (data: any) => {
     const queue: Queue = data.queue;
@@ -12,10 +17,12 @@ const QueueMembers = (data: any) => {
 
     const [users, setUsers] = useState<User[]>([]);
     const [selectedUsername, setSelectedUsername] = useState<string>("");
+    const [queueMembers, setQueueMembers] = useState<qMember[]>([]);
     
     
     useEffect(()=>{
         initUsers();
+        getMembers();
     }, [])
 
     const initUsers =async ()=>{
@@ -25,12 +32,12 @@ const QueueMembers = (data: any) => {
 
     const renderUserList =()=>{
         return users.map((user)=>(
-        <option key={user.ID} id={user.ID}>
+        <option key={user.ID}>
             {user.name}
         </option>))
     }
 
-    const addUserToQueue=async (username:string)=>{
+    const addUserToQueue = async (username:string)=>{
         const userId = getUserId(username);
         if (userId === undefined){
             console.error("Select correct user");
@@ -39,8 +46,9 @@ const QueueMembers = (data: any) => {
         let qum:QueueUserMap = {ID: 0, queueid:data?.queue?.ID, userid: parseInt(userId) };
         const URL = SERVER + QUEUE_USER_MAP_ENDPOINT;
         const response = await http.post(URL, qum);
-        if(response.status === "201"){
+        if(response.status === 201){
             console.log("All good!")
+            getMembers();
         } else {
             console.log(response.status);
         }
@@ -49,6 +57,13 @@ const QueueMembers = (data: any) => {
     const getUserId = (username:string):string=>{
         const user:any  = users.find((user => user.name === username ));
         return user.ID;
+    }
+
+    const getMembers = async () => {
+        const http = new Http;
+        const URL = SERVER + QUEUES_ENDPOINT + "/" + data?.queue?.ID;
+        const result = await http.get(URL);
+        setQueueMembers(result.data);
     }
 
     return (
@@ -64,7 +79,7 @@ const QueueMembers = (data: any) => {
                 <button onClick={() => { addUserToQueue(selectedUsername) }} className="btn btn-block btn-xs border-orange-300 w-1/4 h-7">+ ADD</button>
             </div>
             <div>
-                <Members queueid={data?.queue?.ID} />
+                <Members data={queueMembers} />
             </div>
         </div>
     )

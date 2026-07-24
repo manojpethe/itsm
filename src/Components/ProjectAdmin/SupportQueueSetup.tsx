@@ -20,8 +20,10 @@ const SupportQueueSetup = (data:any) => {
     }, [projectId])
 
     const getQueues = async()=>{
+        console.log("getQueues triggered...");
         const endPoint = SERVER + QUEUES_ENDPOINT+ "?projectid=" + projectId;
         const queuesData = await http.get(endPoint);
+        console.log(queuesData.data);
         setQueuesData(queuesData.data);
     }
 
@@ -35,10 +37,11 @@ const SupportQueueSetup = (data:any) => {
         const data:Queue = { name: newQname, projectid: parseInt(projectId), ID: 0 };
         // data.ID = randomInt().toString();
         const result = await http.post(endPoint, data);
-        if(result.data?.status === 201){
+        if(result?.status === 201){
             setNewQname("");
-            setTimeout(()=>{getQueues()},1000);
-            // getQueues(projectId);
+            getQueues();
+        } else {
+            console.log("something went wrong");
         }
     }
     
@@ -47,7 +50,7 @@ const SupportQueueSetup = (data:any) => {
     <div className="border-solid border rounded-md border-emerald-500 p-4">
         <div className="border-b-emerald-500 border-b mb-2 cursor-pointer ">Support Queue Setup</div>
         <div className="flex mb-2 justify-center align-middle">
-            <div className="text-s w-1/4 justify-center ">Add New Queue</div>
+            <div className="text-s w-1/4 justify-center ">Add Que</div>
             <input onChange={(e)=> setNewQname(e.target.value)} value={newQname} className="w-1/2 m-1" type="text" placeholder="name of queue"/>
             <button onClick={()=>{saveQueue(newQname)}} className="btn btn-block text-xs btn-xs btn-accent w-1/4 h-7">OK</button>
         </div>
