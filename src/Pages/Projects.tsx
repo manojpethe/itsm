@@ -81,9 +81,14 @@ const Projects = () => {
                         navigate("/home/projects/"+row.ID+"?title="+row.title); 
                     }}>{row.title}</div></td>
                 <td>{row.info}</td>
+                <td><button onClick={()=>{deleteProject(row.ID)}}>[DELETE]</button></td>
             </tr>)
         ))
         return rows;
+    }
+
+    const deleteProject =(id: number | string)=>{
+        console.log(id);
     }
 
     return (
@@ -104,6 +109,7 @@ const Projects = () => {
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Info</th>
+                                        <th>Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>

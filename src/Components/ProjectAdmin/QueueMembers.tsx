@@ -86,9 +86,27 @@ const QueueMembers = (data: any) => {
         deleteMemberFromQueue(id);
     }
 
+    const handleDeleteQueue=(id:number | string)=>{
+        deleteQueue(id);
+    }
+
+    const deleteQueue= async(id:number| string)=>{
+        const http = new Http;
+        const URL = SERVER + QUEUES_ENDPOINT + "/"+id;
+        const request = { queueid: data?.queue?.ID};
+        const result = await http.delete(URL,request);
+        console.log(result);
+        if(result.status === 200){
+            console.log("All Good!");
+        } else {
+            console.error(result.status);
+        }
+    }
+
     return (
         <div className="border-solid border rounded-md border-gray-700 p-4 m-2">
             <div className="text-orange-300">{queue.name}</div>
+            <button onClick={()=>handleDeleteQueue(queue.ID)} className="btn btn-block btn-xs border-orange-300 w-1/4 h-7">DELETE </button>
             <div className="flex mb-1 justify-center align-middle">
                 <div className="text-xs w-1/4 justify-center mt-2">Add member</div>
                 {/* <input onChange={() => { }} className="text-xs w-1/2 m-1" type="text" placeholder="name of member" /> */}
