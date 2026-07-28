@@ -11,8 +11,8 @@ export interface qMember {
   name: string;
 }
 
-const QueueMembers = (data: any) => {
-    const queue: Queue = data.queue;
+const QueueMembers = (params: any) => {
+    const queue: Queue = params.queue;
     const http = new Http;
 
     const [users, setUsers] = useState<User[]>([]);
@@ -43,7 +43,7 @@ const QueueMembers = (data: any) => {
             console.error("Select correct user");
             return;
         }
-        let qum:QueueUserMap = {ID: 0, queueid:data?.queue?.ID, userid: parseInt(userId) };
+        let qum:QueueUserMap = {ID: 0, queueid:params?.queue?.ID, userid: parseInt(userId) };
         const URL = SERVER + QUEUE_USER_MAP_ENDPOINT;
         const response = await http.post(URL, qum);
         if(response.status === 201){
@@ -61,7 +61,7 @@ const QueueMembers = (data: any) => {
 
     const getMembers = async () => {
         const http = new Http;
-        const URL = SERVER + QUEUES_ENDPOINT + "/" + data?.queue?.ID;
+        const URL = SERVER + QUEUES_ENDPOINT + "/" + params?.queue?.ID;
         const result = await http.get(URL);
         const dummyData:qMember[] = []
         setQueueMembers(result.data || dummyData);
@@ -70,7 +70,7 @@ const QueueMembers = (data: any) => {
     const deleteMemberFromQueue =  async(id:number) => {
         const http = new Http;
         const URL = SERVER + QUEUE_USER_MAP_ENDPOINT;
-        const request = { queueid: data?.queue?.ID, userid: id };
+        const request = { queueid: params?.queue?.ID, userid: id };
         const result = await http.delete(URL,request);
         console.log(result);
         if(result.status === 200){
@@ -93,10 +93,11 @@ const QueueMembers = (data: any) => {
     const deleteQueue= async(id:number| string)=>{
         const http = new Http;
         const URL = SERVER + QUEUES_ENDPOINT + "/"+id;
-        const request = { queueid: data?.queue?.ID};
+        const request = { queueid: params?.queue?.ID};
         const result = await http.delete(URL,request);
         console.log(result);
         if(result.status === 200){
+            params.getQueues();
             console.log("All Good!");
         } else {
             console.error(result.status);
@@ -105,8 +106,10 @@ const QueueMembers = (data: any) => {
 
     return (
         <div className="border-solid border rounded-md border-gray-700 p-4 m-2">
+            <div className="flex space-x-5">
             <div className="text-orange-300">{queue.name}</div>
-            <button onClick={()=>handleDeleteQueue(queue.ID)} className="btn btn-block btn-xs border-orange-300 w-1/4 h-7">DELETE </button>
+            <button onClick={()=>handleDeleteQueue(queue.ID)} className="btn btn-block btn-xs w-1/5 h-7">DELETE </button>
+            </div>
             <div className="flex mb-1 justify-center align-middle">
                 <div className="text-xs w-1/4 justify-center mt-2">Add member</div>
                 {/* <input onChange={() => { }} className="text-xs w-1/2 m-1" type="text" placeholder="name of member" /> */}
@@ -114,7 +117,7 @@ const QueueMembers = (data: any) => {
                 <datalist id="members">
                 {renderUserList()}
                 </datalist>
-                <button onClick={() => { addUserToQueue(selectedUsername) }} className="btn btn-block btn-xs border-orange-300 w-1/4 h-7">+ ADD</button>
+                <button onClick={() => { addUserToQueue(selectedUsername) }} className="btn btn-xs border-orange-300 w-1/4 h-7">+ ADD</button>
             </div>
             <div>
                 <Members data={queueMembers} deleteMember={handleDeleteMember} />

@@ -56,7 +56,7 @@ const SupportQueueSetup = (data:any) => {
         </div>
         <div>
             {/* {queuesData.map((item)=>(<div className="cursor-pointer" key={item.ID}>{item.name}</div>))} */}
-            {queuesData.map((item)=>(<QueueMembers key={item.ID} queue={item}  />))}
+            {queuesData.map((item)=>(<QueueMembers key={item.ID} queue={item} getQueues={getQueues} />))}
         </div>
     </div>  
   )
